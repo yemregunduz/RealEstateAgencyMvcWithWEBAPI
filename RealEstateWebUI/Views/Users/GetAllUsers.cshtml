@@ -1,0 +1,59 @@
+﻿@model System.Collections.Generic.List<RealEstateAgencyMVC.Models.UserViewModel>
+@{
+    ViewBag.Title = "Kullanıcılar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="~/Content/usersgetall.css"/>
+</head>
+<div class="container">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card" style="margin-top:20px">
+                <div class="card-body">
+                    <div id="PlaceHolderHere"></div>
+                    <a class="btn btn-outline-success" href="/Users/AddUser"> Yeni Kullanıcı Ekle</a>
+                    <h5 style="text-align:center" class="header-title pb-3 mt-0">Kullanıcılar</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr class="align-self-center">
+                                    <th>Email</th>
+                                    <th>Şirket Adı</th>
+                                    <th>Kullanıcı Tipi</th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model)
+                                {
+                                    <tr>
+                                        
+                                        <td>@user.Email</td>
+                                        <td>@user.CompanyName</td>
+                                        @if (user.UserType.Contains("admin"))
+                                        {
+                                            <td><span class="badge badge-boxed badge-soft-primary">Yönetici</span></td>
+                                        }
+                                        @if (user.UserType.Contains("realestate"))
+                                        {
+                                            <td><span class="badge badge-boxed badge-soft-warning">Emlakçı</span></td>
+                                        }
+                                        <td><a onclick="return confirm('Silmek istediğinizden emin misiniz?')" href="/Users/Delete/@user.Id" class="btn btn-outline-danger">Sil</a></td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+

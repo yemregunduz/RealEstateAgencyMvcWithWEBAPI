@@ -1,0 +1,172 @@
+﻿@model RealEstateWebUI.Models.MultipleViewModel
+@{
+    ViewBag.Title = "İlan Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="margin-top:20px;width:80%;margin-left:10%">
+    <div class="card-title" style="text-align:center">
+        <strong>İlan Ekle</strong>
+    </div>
+    <div class="card-body">
+        <form method="post" id="addRealEstateClassifiedForm" class="needs-validation" novalidate>
+            @using (Html.BeginForm("AddRealestateClassified", "RealEstateClassifieds", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+                @Html.AntiForgeryToken()
+
+                <div class="form-group col-md-12">
+                    <label for="realestateclassifiedtitle">İlan başlığı</label>
+                    <input type="text" class="form-control" id="realestateclassifiedtitle" maxlength="250" name="realestateclassifiedtitle" placeholder="İlan başlığı" required>
+                    <div class="invalid-feedback" required>
+                        İlan başlığı girmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group col-md-12" style="visibility:hidden;display:none" >
+                    <label for="userId">UserId</label>
+                    <input readonly type="text" class="form-control" id="userId" maxlength="250" name="userId" placeholder="" value="@Session["userId"].ToString() " required>
+
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="realestateclassifiedtitle">Bina Yaşı</label>
+                    <input type="number" class="form-control" id="buildingAge" min="0" name="buildingAge" placeholder="Bina yaşı" required>
+                    <div class="invalid-feedback" required>
+                        Sıfır veya daha büyük bina yaşı girmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="squareMeters">Metrekare</label>
+                    <input type="text" oninput="this.value = this.value.replace(/[^0-9,]/g, '').replace(/(\..*)\./g, '$1');" class="form-control" id="squareMeters" min="1" name="squareMeters" placeholder="m2(Küsüratı virgülle ayırın)" required>
+                    <div class="invalid-feedback">
+                        Metrekare bilgisi girmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="floor">Kat</label>
+                    <input type="number" class="form-control" id="floor" name="floor" placeholder="Kat" required>
+                    <div class="invalid-feedback">
+                        Kat bilgisi girmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+
+                    <label for="realEstatePrice">Fiyat</label>
+                    <input type="text" oninput="this.value = this.value.replace(/[^0-9,]/g, '').replace(/(\..*)\./g, '$1');" class="form-control" id="realEstatePrice" min="1" name="realEstatePrice" placeholder="Fiyat" required>
+                    <div class="invalid-feedback">
+                        Fiyat girmek zorunludur.(Geçersiz Fiyat!)
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="fullAddress">Açık adres</label>
+                    <input type="text" class="form-control" id="fullAddress" maxlength="250" name="fullAddress" placeholder="Açık Adres" required>
+                    <div class="invalid-feedback">
+                        Açık adres girmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="numberOfRoomId">Oda sayısı</label>
+                    <select id="numberOfRoomId" name="numberOfRoomId" class="form-select" required>
+                        <option selected value="">---ODA SAYISI SEÇİNİZ---</option>
+                        @foreach (var numberOfRoom in Model.NumberOfRooms)
+                        {
+
+                            <option value="@numberOfRoom.Id">@numberOfRoom.RoomCount</option>
+                        }
+                    </select>
+                    <div class="invalid-feedback">
+                        Oda sayısı seçmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="drpCities">Şehirler</label>
+                    <select id="drpCities" name="cityId" class="form-select" required>
+                        <option selected value="">---Şehir Seçiniz---</option>
+                        @foreach (var city in Model.Cities)
+                        {
+                            <option value="@city.Id">@city.CityName</option>
+                        }
+                    </select>
+                    <div class="invalid-feedback">
+                        Şehir seçmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="drpDistricts">İlçeler</label>
+                    <select id="drpDistricts" name="districtId" class="form-select" required>
+                        <option selected value="">---İlçe Seçiniz---</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        İlçe seçmek zorunludur..
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="drpNeighborhoods">Mahalleler</label>
+                    <select id="drpNeighborhoods" name="neighborhoodId" class="form-select" required>
+                        <option selected value="">---Mahalle Seçiniz---</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Mahalle seçmek zorunludur.
+                    </div>
+                </div>
+
+                <button style="margin-top:15px" class="btn btn-outline-success">Ekle</button>
+            }
+        </form>
+    </div>
+
+</div>
+<script>
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    var forms = document.getElementsByClassName('needs-validation');
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+<script>
+    $(function () {
+        $('#drpCities').change(function () {
+            var id = $('#drpCities').val();
+            $.ajax({
+                url: '/RealEstateClassifieds/GetAllDistrictByCityId',
+                data: { cityId: id },
+                type: "POST",
+                dataType: "Json",
+                success: function (data) {
+                    console.log(data);
+                    $('#drpDistricts').empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $('#drpDistricts').append("<option value='" + data[i].Id + "'>" + data[i].DistrictName + "</Option>");
+                    }
+                }
+            });
+        });
+    });
+    $(function () {
+        $('#drpDistricts').change(function () {
+            var id = $('#drpDistricts').val();
+            $.ajax({
+                url: '/RealEstateClassifieds/GetAllNeighborhoodsByDistrictId',
+                data: { districtId: id },
+                type: "POST",
+                dataType: "Json",
+                success: function (data) {
+                    console.log(data);
+                    $('#drpNeighborhoods').empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $('#drpNeighborhoods').append("<option value='" + data[i].Id + "'>" + data[i].NeighborhoodName + "</Option>");
+                    }
+                }
+            });
+        });
+    });
+</script>

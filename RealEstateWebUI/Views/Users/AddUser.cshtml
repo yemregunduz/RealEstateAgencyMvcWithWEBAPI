@@ -1,0 +1,78 @@
+﻿@model RealEstateAgencyMVC.Models.UserForRegisterDtoModel
+@{
+    ViewBag.Title = "Kullanıcı ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card" style="margin-top:20px;width:80%;margin-left:10%">
+    <div class="card-title" style="text-align:center">
+        <strong>Kullanıcı ekle</strong>
+    </div>
+    <div class="card-body">
+        <form method="post" id="userAddForm" class="needs-validation" novalidate>
+            @using (Html.BeginForm("UserAdd", "Users"))
+            {
+
+                <div class="form-group col-md-12">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                    <div class="invalid-feedback" >
+                        Email girmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="password">Şifre</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Şifre" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$!%*?&])[A-Za-z\d$!%*?&]{8,}$">
+                    <div class="invalid-feedback">
+                        Oluşturacağınız şifre minimum 8 karakter olmalı,en az bir büyük harf,bir küçük harf,sayı ve $!%*?& özel karakterlerinden birini içermelidir.(Dilerseniz boş bırakabilirsiniz.(Default şifre = RealEstate54?))
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="userType">Kullanıcı Tipi</label>
+                    <select id="userType" name="userType" class="form-select" required>
+                        <option selected value="">---KULLANICI TİPİNİZİ SEÇİNİZ---</option>
+                        <option  value="admin">Yönetici</option>
+                        <option value="realestate">Emlakçı</option>
+                    </select>
+                    <div class="invalid-feedback" >
+                        Kullanıcı tipi seçmek zorunludur.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyName">Şirket Adı</label>
+                    <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Şirket adı" required>
+                    <div class="invalid-feedback">
+                        Şirket adı girmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group" style="visibility:hidden;display:none">
+                    <label for="status">Status</label>
+                    <input type="text" class="form-control" id="status" name="status" value="true">
+                </div>
+                <button style="margin-top:15px" class="btn btn-outline-success">Ekle</button>
+            }
+        </form>
+    </div>
+ 
+</div>
+<script>
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    var forms = document.getElementsByClassName('needs-validation');
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+                
+

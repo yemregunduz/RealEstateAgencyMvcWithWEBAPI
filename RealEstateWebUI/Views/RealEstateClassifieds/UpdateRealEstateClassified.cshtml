@@ -1,0 +1,93 @@
+﻿@model RealEstateWebUI.Models.RealEstateClassifiedModel
+@{
+    ViewBag.Title = "İlanGüncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="margin-top:20px;width:80%;margin-left:10%">
+    <div class="card-title" style="text-align:center">
+        <strong>İlan Güncelle</strong>
+    </div>
+    <div class="card-body">
+        <form method="post" id="updateRealEstateClassifiedForm" class="needs-validation" novalidate>
+            @using (Html.BeginForm("Update", "RealEstateClassifieds", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+                @Html.AntiForgeryToken()
+
+                <div class="form-group col-md-12">
+                    <label for="realestateclassifiedtitle">İlan başlığı</label>
+                    <input type="text" class="form-control" id="realestateclassifiedtitle" value="@Model.RealEstateClassifiedTitle" maxlength="250" name="realestateclassifiedtitle" placeholder="İlan başlığı" required>
+                    <div class="invalid-feedback" required>
+                        İlan başlığı girmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="realestateclassifiedtitle">Bina Yaşı</label>
+                    <input type="number" class="form-control" id="buildingAge" min="0" name="buildingAge" value="@Model.BuildingAge" placeholder="Bina yaşı" required>
+                    <div class="invalid-feedback" required>
+                        Sıfır veya daha büyük bina yaşı girmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="squareMeters">Metrekare</label>
+                    <input type="text" oninput="this.value = this.value.replace(/[^0-9,]/g, '').replace(/(\..*)\./g, '$1');" class="form-control" id="squareMeters" value="@Model.SquareMeters" min="1" name="squareMeters" placeholder="m2(Küsüratı virgülle ayırın)" required>
+                    <div class="invalid-feedback">
+                        Metrekare bilgisi girmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="floor">Kat</label>
+                    <input type="number" class="form-control" id="floor" value="@Model.Floor" name="floor" placeholder="Kat" required>
+                    <div class="invalid-feedback">
+                        Kat bilgisi girmek zorunludur.
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+
+                    <label for="realEstatePrice">Fiyat</label>
+                    <input type="text"   oninput="this.value = this.value.replace(/[^0-9,]/g, '').replace(/(\..*)\./g, '$1');"  class="form-control" id="realEstatePrice" value="@Model.RealEstatePrice" min="1"  name="realEstatePrice" placeholder="Fiyat" required>
+                    <div class="invalid-feedback">
+                        Fiyat girmek zorunludur.(Geçersiz Fiyat!)
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="fullAddress">Açık adres</label>
+                    <input type="text" class="form-control" id="fullAddress" value="@Model.FullAddress" maxlength="250" name="fullAddress" placeholder="Açık Adres" required>
+                    <div class="invalid-feedback">
+                        Açık adres girmek zorunludur..
+                    </div>
+                </div>
+                <div class="form-group col-md-12" required>
+                    <label for="status">İlan Durumu</label>
+                    <select id="status" name="status" class="form-select">
+                        <option value="true" @(Model.Status == true ? "selected" : "") >Aktif</option>
+                        <option value="false="@(Model.Status == false ? "selected": "")>Pasif</option>
+                    </select>
+                </div>
+                <button style="margin-top:15px" class="btn btn-outline-success">Güncelle</button>
+            }
+        </form>
+    </div>
+
+</div>
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>

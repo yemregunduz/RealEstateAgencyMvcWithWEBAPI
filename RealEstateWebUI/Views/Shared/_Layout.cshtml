@@ -1,0 +1,99 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/menu.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/toastr.min.css" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body >
+
+    <div id="wrapper" class="wrapper-content">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="">
+                        RealEstateAgency.com
+                    </a>
+                </li>
+                @if (Session["userType"].ToString().Contains("realestate"))
+                {
+                    <li>
+                        <a href="#">@Html.ActionLink("İlanlarım", "Index", "realestateclassifieds")</a>
+                    </li>
+                }
+
+
+                @if (Session["userType"].ToString().Contains("admin"))
+                {
+                    <li>
+                        <a href="#">@Html.ActionLink("Kullanıcılar", "getallusers", "users")</a>
+                    </li>
+                }
+                <li>
+                    <a href="">@Html.ActionLink("Şifre değiştir", "changepassword", "auth")</a>
+                </li>
+
+                <li>
+                    <a href="#">@Html.ActionLink("Çıkış yap", "logout", "auth")</a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button class="btn-menu btn btn-success btn-toggle-menu" type="button" style="margin-top:9px">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="ti-panel"></i>
+                                    <p>Stats</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="ti-settings"></i>
+                                    <p>Settings</p>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $(".btn-toggle-menu").click(function () {
+                $("#wrapper").toggleClass("toggled");
+            });
+        })
+    </script>
+</body>
+</html>
+
+
+

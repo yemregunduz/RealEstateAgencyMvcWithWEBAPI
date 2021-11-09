@@ -1,0 +1,102 @@
+﻿@model RealEstateAgencyMVC.Models.UserForLoginDtoModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>Giriş yap</title>
+
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/login.css" />
+    <link rel="stylesheet" href="~/Content/toastr.min.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" integrity="sha256-3sPp8BkKUE7QyPSl6VfBByBroQbKxKG7tsusY2mhbVY=" crossorigin="anonymous" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+
+</head>
+<body>
+   
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11 mt-60 mx-md-auto">
+                <div class="login-box bg-white pl-lg-5 pl-0">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-md-6">
+                            <div class="form-wrap bg-white">
+                                <h4 class="btm-sep pb-3 mb-5">Giriş yap</h4>
+                                <form class="needs-validation" novalidate method="post"  >
+                                    @using (Html.BeginForm("login", "auth"))
+                                    {
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group position-relative">
+                                                    <span class="zmdi zmdi-account"></span>
+                                                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-12" style="margin-top:15px">
+                                                <div class="form-group position-relative">
+                                                    <span class="zmdi zmdi-email"></span>
+                                                    <input type="password" id="password" name="password" class="form-control" placeholder="Şifre" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-30" style="margin-top:15px">
+                                                <button type="submit" id="submit" class="btn btn-outline-primary btn-block" style="float:right">
+                                                    Giriş Yap
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <img class="img-fluid" src="~/Images/loginpage.jpg"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+@if (TempData["Message"] != null)
+{
+    <script type="text/javascript">
+        toastr.options = {
+            "positionClass":"toast-bottom-right"
+        }
+        toastr.error("@TempData["Message"]");
+
+    </script>
+}
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+        toastr.success("@ViewBag.Message")
+    </script>
+}
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>

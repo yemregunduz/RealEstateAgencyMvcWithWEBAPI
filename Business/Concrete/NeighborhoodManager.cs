@@ -51,7 +51,7 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<Neighborhood>> GetAllNeighborhoodsByDistrictId(int districtId)
         {
-            return new SuccessDataResult<List<Neighborhood>>(_neighborhoodDal.GetAll(n => n.DisctrictId == districtId),Messages.NeighborhoodListedByDistrictId);
+            return new SuccessDataResult<List<Neighborhood>>(_neighborhoodDal.GetAll(n => n.DistrictId == districtId),Messages.NeighborhoodListedByDistrictId);
         }
         [SecuredOperation("admin,realestate", Priority = 1)]
         [ValidationAspect(typeof(NeighborhoodValidator), Priority = 2)]

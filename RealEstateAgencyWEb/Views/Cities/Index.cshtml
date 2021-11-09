@@ -1,0 +1,16 @@
+﻿@model System.Collections.Generic.List<Entities.Concrete.City>
+@{ 
+    Layout = "../Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+
+
+    <div>
+        @foreach (var city in Model)
+        {
+            @city.CityName
+            <br />
+        }
+         
+    </div>
+

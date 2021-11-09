@@ -16,7 +16,7 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(n => n.NeighborhoodName)
                 .NotEmpty().WithMessage(Messages.NeighborhoodNameIsRequired)
                 .MaximumLength(100).WithMessage(Messages.NeighborhoodIsNotValid);
-            RuleFor(n => n.DisctrictId)
+            RuleFor(n => n.DistrictId)
                 .NotNull().WithMessage(Messages.DistrictNameIsRequired);
         }
     }

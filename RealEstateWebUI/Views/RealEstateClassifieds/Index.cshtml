@@ -1,0 +1,184 @@
+﻿@model System.Collections.Generic.List<RealEstateWebUI.Models.RealEstateClassifiedDetailDtoModel>
+@{
+    ViewBag.Title = "İlanlarım";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+<div class="container" style="margin-top:15px">
+
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <form>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="numberOfRoomId">Oda sayısı</label>
+                                <select id="numberOfRoomId" name="numberOfRoomId" class="form-select" required>
+                                    <option selected value="">---ODA SAYISI SEÇİNİZ---</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card bg-pattern">
+                <div class="card-body">
+                    <div class="float-right">
+                        <i class="fa fa-th text-primary h4 ml-3"></i>
+                    </div>
+                    <h5 class="font-size-20 mt-0 pt-1">@Model.Count()</h5>
+                    <p class="text-muted mb-0">Toplam İlanlarım</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-pattern">
+                <div class="card-body">
+                    <div class="float-right">
+
+                        <i class="fa fa-file text-primary h4 ml-3"></i>
+                    </div>
+                    <h5 class="font-size-20 mt-0 pt-1">@Model.Count(m => m.Status == true)</h5>
+                    <p class="text-muted mb-0">Aktif İlanlarım</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-pattern">
+                <div class="card-body">
+                    <div class="float-right">
+
+                        <i class="fa fa-archive text-primary h4 ml-3"></i>
+                    </div>
+                    <h5 class="font-size-20 mt-0 pt-1">@Model.Count(m => m.Status == false)</h5>
+                    <p class="text-muted mb-0">Pasif İlanlarım</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <a style="width:100%" class="btn btn-outline-success" href="/RealEstateClassifieds/AddRealEstateClassified">Yeni İlan</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group mb-0">
+                                <div class="input-group mb-0">
+                                    <input id="searchInput" type="text" class="form-control" placeholder="Anahtar kelime giriniz..." aria-describedby="project-search-addon" />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-primary" disabled type="button" id="project-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card" style="margin-top:15px">
+                <div class="card-body">
+                    <div class="table-responsive project-list">
+                        <table class="table project-table table-centered table-nowrap" id="realEstateClassifiedTable">
+                            <thead>
+                                <tr>
+
+                                    <th scope="col">İlan Başlığı</th>
+                                    <th scope="col">Kat</th>
+                                    <th scope="col">M2</th>
+                                    <th scope="col">Mahalle</th>
+                                    <th scope="col">Semt</th>
+                                    <th scope="col">Şehir</th>
+                                    <th scope="col">Fiyat</th>
+                                    <th scope="col">Durum</th>
+                                    <th scope="col">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var realEstateClassified in Model)
+                                {
+                                <tr>
+
+                                    <td>@realEstateClassified.RealEstateClassifiedTitle</td>
+                                    <td>@realEstateClassified.Floor</td>
+                                    <td>@realEstateClassified.SquareMeters</td>
+                                    <td>@realEstateClassified.NeighborhoodName</td>
+                                    <td>@realEstateClassified.DistrictName</td>
+                                    <td>@realEstateClassified.CityName</td>
+                                    <td>@realEstateClassified.RealEstatePrice</td>
+                                    @if (realEstateClassified.Status == true)
+                                    {
+                                        <td>
+                                            <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i> Yayında</span>
+                                        </td>
+                                    }
+                                    @if (realEstateClassified.Status == false)
+                                    {
+                                        <td>
+                                            <span class="text-danger font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i> Pasif</span>
+                                        </td>
+                                    }
+                                    <td>
+                                        <div class="action">
+                                            <a href="/RealEstateClassifieds/Update/@realEstateClassified.Id" class="btn btn-outline-success">Düzenle</a>
+                                            <a onclick="return confirm('Silmek istediğinizden emin misiniz?')" href="/RealEstateClassifieds/Delete/@realEstateClassified.Id" class="btn btn-outline-danger">Sil</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end project-list -->
+
+                    <div class="pt-3">
+                        <ul class="pagination justify-content-end mb-0">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#realEstateClassifiedTable tbody>tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+

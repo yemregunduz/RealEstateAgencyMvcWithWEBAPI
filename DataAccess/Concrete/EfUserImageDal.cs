@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess.Concrete.EntitiyFramework;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete
 {
-    public class EfUserImageDal:EfEntityRepositoryBase<UserImage,RealEstateAgencyDbContext>
+    public class EfUserImageDal:EfEntityRepositoryBase<UserImage,RealEstateAgencyDbContext>,IUserImageDal
     {
     }
 }
